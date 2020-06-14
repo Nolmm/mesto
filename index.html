@@ -1,0 +1,104 @@
+<!DOCTYPE html> 
+<html lang="ru"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Интерактивная страница для обмена фото"> 
+  <meta name="keywords" content="Эльбрус Домбай Карачаево-Черкессия"> 
+  <meta name="author" content="Любовь Новичкова"> 
+  <title>Место Россия</title>
+  <link rel="stylesheet" href="./  styles/index.css">
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="header__logo"></div>
+    </header>
+    <main class="content">
+      <section class="profile">
+        <div class="profile__avatar"></div>
+        <div class="profile__info">
+          <div class="profile__wrapper">
+            <h1 class="profile__title profile__title-user">Жак-Ив Кусто</h1>
+            <p class="profile__subtitle profile__subtitle-user">Исследователь океана</p></div>
+            <button class="profile__edit_button profile__open-popup"></button>
+          </div>
+          <button class="profile__add_button"></button>
+      </section>
+      <section class="elements">
+        <ul class="elements__list">
+          <li class="elements__list-item">
+            <figure class="elements__figure">
+              <img class="elements__image" src="./images/Karachaevsk.jpg" alt="Карачаевск">
+              <figcaption class="elements__figcaption">
+                <h3 class="elements__title">Карачаевск</h3>
+                <div class="elements__like"></div>
+              </figcaption>
+            </figure>
+          </li>
+          <li class="elements__list-item">
+            <figure class="elements__figure">
+              <img class="elements__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
+              <figcaption class="elements__figcaption">
+                <h3 class="elements__title">Гора Эльбрус</h3>
+                <div class="elements__like"></div>
+              </figcaption>
+            </figure>
+          </li>
+          <li class="elements__list-item">
+            <figure class="elements__figure">
+              <img class="elements__image" src="./images/dombay.jpg" alt="Домбай">
+              <figcaption class="elements__figcaption">
+                <h3 class="elements__title">Домбай</h3>
+                <div class="elements__like"></div>
+              </figcaption>
+            </figure>
+          </li>
+          <li class="elements__list-item">
+            <figure class="elements__figure">
+            <img class="elements__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
+              <figcaption class="elements__figcaption">
+                <h3 class="elements__title">Гора Эльбрус</h3>
+                <div class="elements__like"></div>
+              </figcaption>
+            </figure>
+          </li>
+          <li class="elements__list-item">
+            <figure class="elements__figure">
+              <img class="elements__image" src="./images/dombay.jpg" alt="Домбай">
+              <figcaption class="elements__figcaption">
+                <h3 class="elements__title">Домбай</h3>
+                <div class="elements__like"></div>
+              </figcaption>
+            </figure>
+          </li>
+          <li class="elements__list-item">
+            <figure class="elements__figure">
+              <img class="elements__image" src="./images/Karachaevsk.jpg" alt="Карачаево-Черкессия">
+              <figcaption class="elements__figcaption">
+                <h3 class="elements__title">Карачаево-Черкессия</h3>
+                <div class="elements__like"></div>
+              </figcaption>
+            </figure>
+          </li>
+        </ul>
+      </section>
+      <section class="footer">
+        <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+      </section>
+    </main>
+    <section class="popup">
+      <div class="popup__container">
+        <button class="popup__close"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="popup__form">
+          <input type="text" name="name" id="name" class="popup__item popup__item-name">
+          <input type="text" name="job" id="job" class="popup__item popup__item-job">
+          <button class="popup__submit-button">Сохранить</button>
+        </form>
+      </div>
+    </section>
+  </div>
+</body>
+<script type="text/javascript" src='./scripts/index.js'></script>
+</html>
