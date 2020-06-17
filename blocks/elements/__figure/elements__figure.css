@@ -3,3 +3,9 @@
   max-width: 282px;
   margin: 0;
 }
+
+@media only screen and (max-width: 1024px) {
+  .elements__figure {
+    margin: 0 auto;
+  }
+}

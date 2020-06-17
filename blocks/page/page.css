@@ -5,17 +5,7 @@
   font-weight: normal;
   text-rendering: optimizeLegibility;
   margin: 0 auto;
-  padding: 0 199px;
-}
-
-@media only screen and (max-width: 1206px) {
-  .page {
-    padding: 0 60px;
-  }
-}
-
-@media only screen and (max-width: 738px) {
-  .page {
-    padding: 0 19px;
-  }
+  min-width: 320px;
+  max-width: 1280px;
+  width: 100%;
 }

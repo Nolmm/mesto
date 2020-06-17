@@ -9,30 +9,29 @@
   <title>Место Россия</title>
   <link rel="stylesheet" href="./styles/index.css">
 </head>
-<body>
-  <div class="page">
+<body class="page">
     <header class="header">
       <div class="header__logo"></div>
     </header>
-    <main class="content">
+    <main>
       <section class="profile">
         <div class="profile__avatar"></div>
         <div class="profile__info">
           <div class="profile__wrapper">
-            <h1 class="profile__title profile__title-user">Жак-Ив Кусто</h1>
-            <p class="profile__subtitle profile__subtitle-user">Исследователь океана</p></div>
-            <button class="profile__edit_button profile__open-popup"></button>
+            <h1 class="profile__title">Жак-Ив Кусто</h1>
+            <p class="profile__subtitle">Исследователь океана</p></div>
+            <button type="button" class="profile__edit-button"></button>
           </div>
-          <button class="profile__add_button"></button>
+          <button type="button" class="profile__add-button"></button>
       </section>
       <section class="elements">
         <ul class="elements__list">
           <li class="elements__list-item">
             <figure class="elements__figure">
-              <img class="elements__image" src="./images/Karachaevsk.jpg" alt="Карачаевск">
+              <img class="elements__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
               <figcaption class="elements__figcaption">
                 <h3 class="elements__title">Карачаевск</h3>
-                <div class="elements__like"></div>
+                <button type="button" class="elements__like"></button>
               </figcaption>
             </figure>
           </li>
@@ -41,7 +40,7 @@
               <img class="elements__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
               <figcaption class="elements__figcaption">
                 <h3 class="elements__title">Гора Эльбрус</h3>
-                <div class="elements__like"></div>
+                <button type="button" class="elements__like"></button>
               </figcaption>
             </figure>
           </li>
@@ -50,7 +49,7 @@
               <img class="elements__image" src="./images/dombay.jpg" alt="Домбай">
               <figcaption class="elements__figcaption">
                 <h3 class="elements__title">Домбай</h3>
-                <div class="elements__like"></div>
+                <button type="button" class="elements__like"></button>
               </figcaption>
             </figure>
           </li>
@@ -59,7 +58,7 @@
             <img class="elements__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
               <figcaption class="elements__figcaption">
                 <h3 class="elements__title">Гора Эльбрус</h3>
-                <div class="elements__like"></div>
+                <button type="button" class="elements__like"></button>
               </figcaption>
             </figure>
           </li>
@@ -68,16 +67,16 @@
               <img class="elements__image" src="./images/dombay.jpg" alt="Домбай">
               <figcaption class="elements__figcaption">
                 <h3 class="elements__title">Домбай</h3>
-                <div class="elements__like"></div>
+                <button type="button" class="elements__like"></button>
               </figcaption>
             </figure>
           </li>
           <li class="elements__list-item">
             <figure class="elements__figure">
-              <img class="elements__image" src="./images/Karachaevsk.jpg" alt="Карачаево-Черкессия">
+              <img class="elements__image" src="./images/karachaevsk.jpg" alt="Карачаево-Черкессия">
               <figcaption class="elements__figcaption">
                 <h3 class="elements__title">Карачаево-Черкессия</h3>
-                <div class="elements__like"></div>
+                <button type="button" class="elements__like"></button>
               </figcaption>
             </figure>
           </li>
@@ -89,16 +88,15 @@
     </main>
     <section class="popup">
       <div class="popup__container">
-        <button class="popup__close"></button>
+        <button type="button" class="popup__close"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__form">
-          <input type="text" name="name" id="name" class="popup__item popup__item-name">
-          <input type="text" name="job" id="job" class="popup__item popup__item-job">
-          <button class="popup__submit-button">Сохранить</button>
+        <form name="edit-form" class="popup__form">
+          <input type="text" name="name" id="name" class="popup__item popup__item_name">
+          <input type="text" name="job" id="job" class="popup__item popup__item_job">
+          <button type="submit" class="popup__submit-button">Сохранить</button>
         </form>
       </div>
     </section>
-  </div>
-</body>
 <script src='./scripts/index.js'></script>
+</body>
 </html>

@@ -1,9 +1,11 @@
 .elements__figcaption {
   background-color: white;
-  min-height: 80px;
+  height: 80px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   border-radius:  0 0 10px 10px;
+  padding-left: 21px;
+  padding-right: 21px;
 }

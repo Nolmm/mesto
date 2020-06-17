@@ -4,9 +4,17 @@
   display: flex;
   padding-top: 45px;
   max-width: 882px;
-	min-height: 74px;
-	border-bottom: 1px solid #545454;
+	border-bottom: 1px solid rgba(84, 84, 84, .7);
 	margin-bottom: 40px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media only screen and (max-width: 940px) {
+  .header {
+		margin-left: 80px;
+		margin-right: 80px;
+	}
 }
 
 @media only screen and (max-width: 320px) {
@@ -14,7 +22,7 @@
 		max-width: 324px;
 		padding-top: 28px;
 		margin-bottom: 42px;
-		margin-left: -19px;
-		margin-right: -19px;
+		margin-left: 19px;
+		margin-right: 19px;
 	}
 }
