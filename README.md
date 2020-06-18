@@ -9,4 +9,4 @@
  1. Добавить больше адаптива.
  2. Усовершенствовать script.
 
- [Github](https://nolmm.github.io/mesto/.)
+ [Github](https://nolmm.github.io/mesto/index.html)
