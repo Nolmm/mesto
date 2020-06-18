@@ -12,11 +12,7 @@
   margin-right: auto;
 }
 
-/*@media only screen and (max-width: 940px) {
-  .elements {
-    margin-left: 50px;
-  }
-}*/
+
 
 @media only screen and (max-width: 320px) {
   .elements {

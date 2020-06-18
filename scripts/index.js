@@ -8,10 +8,13 @@ let userTitle = document.querySelector('.profile__title');
 let userSubtitle = document.querySelector('.profile__subtitle');
 
 //открытие и закрытие попап//
-const popupToggle = function() {
+const popupToggle = function() { 
+  if (!popup.classList.contains('popup_opened')) {
+    nameInput.value = userTitle.textContent;
+    jobInput.value = userSubtitle.textContent;
+  }
   popup.classList.toggle('popup_opened')
-  nameInput.value = userTitle.textContent;
-  jobInput.value = userSubtitle.textContent;
+  
 }
 
 //изменение данных на странице через форму//
@@ -20,7 +23,7 @@ function formSubmitHandler (evt) {
     evt.preventDefault();
     userTitle.textContent = nameInput.value;
     userSubtitle.textContent = jobInput.value;
-    popupSubmitButton.addEventListener('click', popupToggle);
+    popupToggle ();
 }
 
 //будет отправка формы//

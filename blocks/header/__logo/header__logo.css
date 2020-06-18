@@ -4,6 +4,7 @@
   height: 33.8px;
   background-size: contain;
   margin-bottom: 40.6px;
+  background-repeat: no-repeat;
 }
 
 @media only screen and (max-width: 320px) {
