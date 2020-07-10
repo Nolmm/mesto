@@ -26,67 +26,13 @@
       </section>
       <section class="elements">
         <ul class="elements__list">
-          <li class="elements__list-item">
-            <figure class="elements__figure">
-              <img class="elements__image" src="./images/karachaevsk_foto.jpg" alt="Карачаевск">
-              <figcaption class="elements__figcaption">
-                <h3 class="elements__title">Карачаевск</h3>
-                <button type="button" class="elements__like"></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li class="elements__list-item">
-            <figure class="elements__figure">
-              <img class="elements__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
-              <figcaption class="elements__figcaption">
-                <h3 class="elements__title">Гора Эльбрус</h3>
-                <button type="button" class="elements__like"></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li class="elements__list-item">
-            <figure class="elements__figure">
-              <img class="elements__image" src="./images/dombay.jpg" alt="Домбай">
-              <figcaption class="elements__figcaption">
-                <h3 class="elements__title">Домбай</h3>
-                <button type="button" class="elements__like"></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li class="elements__list-item">
-            <figure class="elements__figure">
-            <img class="elements__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
-              <figcaption class="elements__figcaption">
-                <h3 class="elements__title">Гора Эльбрус</h3>
-                <button type="button" class="elements__like"></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li class="elements__list-item">
-            <figure class="elements__figure">
-              <img class="elements__image" src="./images/dombay.jpg" alt="Домбай">
-              <figcaption class="elements__figcaption">
-                <h3 class="elements__title">Домбай</h3>
-                <button type="button" class="elements__like"></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li class="elements__list-item">
-            <figure class="elements__figure">
-              <img class="elements__image" src="./images/karachaevsk_foto.jpg" alt="Карачаево-Черкессия">
-              <figcaption class="elements__figcaption">
-                <h3 class="elements__title">Карачаево-Черкессия</h3>
-                <button type="button" class="elements__like"></button>
-              </figcaption>
-            </figure>
-          </li>
         </ul>
       </section>
       <section class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </section>
     </main>
-    <section class="popup">
+    <section class="popup popup__edit-profile">
       <div class="popup__container">
         <button type="button" class="popup__close"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
@@ -97,6 +43,38 @@
         </form>
       </div>
     </section>
+    <section class="popup popup__add-card">
+      <div class="popup__container">
+        <button type="button" class="popup__close-add"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form name="edit-form" class="popup__form popup__add-form">
+          <input type="text" name="place-name" id="place-name" placeholder="Название" class="popup__item popupadd__item_place-name">
+          <input type="url" name="place-img" id="place-img" placeholder="Ссылка на картинку"class="popup__item popupadd__item_place-img">
+          <button type="submit" class="popup__submit-button popup__add-button">Создать</button>
+        </form>
+      </div>
+    </section>
+    <section class="popup popup__increase-img">
+      <div class="popup__container-increase">
+        <button type="button" class="popup__close-img"></button>
+      <figure class="popup__figure">
+        <img alt="фото" src="" class="popup__img">
+        <figcaption class="popup__figcaption"></figcaption>
+      </figure>
+      </div>
+    </section>
+    <template class="card-template">
+      <li class="elements__list-item">
+            <figure class="elements__figure">
+              <button  type="reset" class="elements__trash"></button>
+              <img class="elements__image" src="" alt="фото">
+              <figcaption class="elements__figcaption">
+                <h3 class="elements__title"></h3>
+                <button type="button" class="elements__like"></button>
+              </figcaption>
+            </figure>
+          </li>
+    </template>
 <script src="./scripts/index.js"></script>
 </body>
 </html>
