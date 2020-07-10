@@ -12,4 +12,4 @@
  ## Планы по доработке:
  Усовершенствовать script.
 
- [Github]()
+ [Github](https://nolmm.github.io/mesto/)
