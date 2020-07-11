@@ -1,6 +1,5 @@
 const popup = document.querySelector('.popup');
 const popupEdit = document.querySelector('.popup__edit-profile');
-console.log(popupEdit)
 const popupEditOpenButton = document.querySelector('.profile__edit-button'); //кнопка открытия редактирования профиля
 const popupAddOpenButton = document.querySelector('.profile__add-button'); //кнопка открытия добавления карточки
 const popupEditCloseButton = popup.querySelector('.popup__close'); //закрытие попап профиля
