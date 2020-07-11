@@ -9,6 +9,7 @@
 @import url(./__close-add/popup__close-add.css);
 @import url(./__close-img/popup__close-img.css);
 @import url(./__container-increase/popuppopup__container-increase.css);
+@import url(./__edit-profile/__edit-profile.css);
 
 .popup {
   position: fixed;
