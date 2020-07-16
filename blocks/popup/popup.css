@@ -1,8 +1,12 @@
 @import url(./__container/popup__container.css);
+@import url(./__item/popup__item.css);
+@import url(./__input_error/popup__input_type_error.css);
+@import url(./__input-error/popup__input-error.css);
+@import url(./__input-error_visible/popup__input-error_visible.css);
 @import url(./__close/popup__close.css);
 @import url(./__title/popup__title.css);
 @import url(./__submit-button/popup__submit-button.css);
-@import url(./__item/popup__item.css);
+
 @import url(./__figure/popup__figure.css);
 @import url(./__img/popup__img.css);
 @import url(./__figcaption/popup__figcaption.css);
@@ -10,6 +14,10 @@
 @import url(./__close-img/popup__close-img.css);
 @import url(./__container-increase/popuppopup__container-increase.css);
 @import url(./__edit-profile/__edit-profile.css);
+
+
+@import url(./__button_disabled/popup__button_disabled.css);
+
 
 .popup {
   position: fixed;
