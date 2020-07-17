@@ -1,8 +1,8 @@
-const popup = document.querySelector('.popup');
+const popupsList = document.querySelector('.popup');
 const popupEdit = document.querySelector('.popup__edit-profile');
 const popupEditOpenButton = document.querySelector('.profile__edit-button'); //кнопка открытия редактирования профиля
 const popupAddOpenButton = document.querySelector('.profile__add-button'); //кнопка открытия добавления карточки
-const popupEditCloseButton = popup.querySelector('.popup__close'); //закрытие попап профиля
+const popupEditCloseButton = popupsList.querySelector('.popup__close'); //закрытие попап профиля
 const popupAddCloseButton = document.querySelector('.popup__close-add'); //закрытие попап место
 const popupIncreaseCloseButton = document.querySelector('.popup__close-img'); //закрытие попап с картинкой
 const popupDarkBackground = document.querySelectorAll('.popup');
@@ -74,7 +74,7 @@ function formSubmitHandler (evt) {
 formElementEdit.addEventListener('submit', formSubmitHandler);
 //открытие и закрытие попапов
 popupEditOpenButton.addEventListener('click', function () {
-    if (!popup.classList.contains('popup_opened')) {
+    if (!popupsList.classList.contains('popup_opened')) {
         nameInput.value = userTitle.textContent;
         jobInput.value = userSubtitle.textContent;
 }
@@ -89,8 +89,7 @@ popupAddCloseButton.addEventListener('click', () => popupToggle(popupAdd));
 //слушатель закрытия всех попапов по клавише esc
 window.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-        const allPopup = document.querySelectorAll('.popup');
-        allPopup.forEach( (selectpopup) => {
+        popupsList.forEach( (selectpopup) => {
             selectpopup.classList.remove('popup_opened');
         })
     }
@@ -123,11 +122,13 @@ selectCard.addEventListener('click', function(evt) {
     popupIncreaseImg.src = evt.target.src;
     popupIncreaseImg.alt = name;
     });
-    cardsList.prepend(card);
-    const addLike = document.querySelector('.elements__like');
+    
+    //лайк
+    const addLike = card.querySelector('.elements__like');
     addLike.addEventListener('click', () => {
         addLike.classList.toggle('elements__like_active');
-            });  
+            });
+            cardsList.prepend(card);
 }
 
   //удаление карточки
