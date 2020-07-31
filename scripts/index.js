@@ -1,3 +1,6 @@
+import{Card} from './Card.js';
+import{FormValidator} from './FormValidator.js';
+
 const popupsList = document.querySelector('.popup');
 const popupEdit = document.querySelector('.popup__edit-profile');
 const popupEditOpenButton = document.querySelector('.profile__edit-button'); //кнопка открытия редактирования профиля
@@ -8,8 +11,10 @@ const popupIncreaseCloseButton = document.querySelector('.popup__close-img'); //
 const popupDarkBackground = document.querySelectorAll('.popup');
 const userTitle = document.querySelector('.profile__title');
 const userSubtitle = document.querySelector('.profile__subtitle');
+const submitButtonSelector = document.querySelector('.popup__submit-button');
+
 const popupAdd = document.querySelector('.popup__add-card'); //попап добавления карточки
-const popupIncrease = document.querySelector('.popup__increase-img');
+export const popupIncrease = document.querySelector('.popup__increase-img');
 const popupIncreaseTitle = document.querySelector('.popup__figcaption');
 const popupIncreaseImg = document.querySelector('.popup__img');
 const cardsList = document.querySelector('.elements__list'); //куда вставляем темплейт тег
@@ -54,7 +59,7 @@ const placeImgInput = document.querySelector('.popupadd__item_place-img'); //п�
 
 
 //открытие и закрытие попап//
-const popupToggle = function(selectpopup) { 
+export const popupToggle = function(selectpopup) { 
     selectpopup.classList.toggle('popup_opened');
 }
 
@@ -66,6 +71,7 @@ function formSubmitHandler (evt) {
     evt.preventDefault(); //отменили стандартное поведение
     userTitle.textContent = nameInput.value;
     userSubtitle.textContent = jobInput.value;
+    submitButtonSelector.setAttribute('disabled', true);
     popupToggle(popupEdit);
 }
 
@@ -105,50 +111,38 @@ popupDarkBackground.forEach((background) => {
     })
 })
 
-
-//добавление карточек из массива при загрузке страницы//
-function addCards(name, link) {
-    const card = cardsTemplateElement.cloneNode(true);
-    const selectCard = card.querySelector('.elements__image');
-    card.querySelector('.elements__title').textContent = name;
-    selectCard.src = link;
-    selectCard.alt = name;
-    card.querySelector('.elements__trash').addEventListener('click', deleteCard);
-    
-//открытие увеличения картинки//
-selectCard.addEventListener('click', function(evt) {
-    popupToggle(popupIncrease);
-    popupIncreaseTitle.textContent = name;
-    popupIncreaseImg.src = evt.target.src;
-    popupIncreaseImg.alt = name;
-    });
-    
-    //лайк
-    const addLike = card.querySelector('.elements__like');
-    addLike.addEventListener('click', () => {
-        addLike.classList.toggle('elements__like_active');
-            });
-            cardsList.prepend(card);
-}
-
-  //удаление карточки
-function deleteCard(e) {
-    const card = e.target.closest('.elements__list-item');
-    card.remove();
-  }
-
   //добавление карточки через форму
 function formSubmitHandlerAdd (evt) {
     evt.preventDefault(); //отменили стандартное поведение
-    const placeName = placeNameInput.value
-    const placeImg = placeImgInput.value
-    addCards(placeName, placeImg)
+    popupAdd.querySelector('.popup__submit-button').disabled = true;
+    const objectCard = {};
+    objectCard.link = placeImgInput.value;
+    objectCard.name = placeNameInput.value;
+    const card = new Card(objectCard, cardsTemplateElement);
+    cardsList.prepend(card.generateCard());
+    //addCards(placeName, placeImg)
     placeNameInput.value = '';
     placeImgInput.value = '';
     popupToggle(popupAdd);
 }
 formElementAdd.addEventListener('submit', formSubmitHandlerAdd);
 
-initialCards.forEach(function(element){
-    addCards(element.name, element.link)
-});
+function renderCard(item) {
+   // Создадим экземпляр карточки
+   const card = new Card(item, cardsTemplateElement);
+   // Создаём карточку и возвращаем наружу
+   const cardElement = card.generateCard();
+   // Добавляем в DOM
+   cardsList.prepend(cardElement);
+}
+initialCards.forEach(renderCard); //перебираем массив и каждую добавляем 
+const objectForm = {
+    formSelector: '.popup__form', //формы
+    inputSelector: '.popup__item', //инпуты
+    submitButtonSelector: '.popup__submit-button', //кнопки
+    inactiveButtonClass: 'popup__button_disabled', //неактивные кнопки
+    inputErrorClass: 'popup__input_type_error', //подчеркивает красным незаполненные поля
+    errorClass: 'popup__input-error_visible' //делает сообщение об ошибке видимым
+  }
+const popupAddValidation = new FormValidator(objectForm, popupAdd).enableValidation(); //экземпляр для формы добавления картинки
+const popupEditValidation = new FormValidator(objectForm, popupEdit).enableValidation(); //экземпляр для редактирования профиля
