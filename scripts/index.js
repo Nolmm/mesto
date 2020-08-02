@@ -65,6 +65,9 @@ const placeImgInput = document.querySelector('.popupadd__item_place-img'); //п�
 //открытие и закрытие попап//
 export const popupToggle = function (selectpopup) {
   window.addEventListener('keydown', closePopupEsc); //добавляет слушатель для закрытия по esc
+  if (selectpopup.classList.contains('popup_opened')) {
+    window.removeEventListener('keydown', closePopupEsc);
+  }
   selectpopup.classList.toggle('popup_opened');
 };
 
@@ -98,7 +101,7 @@ popupAddCloseButton.addEventListener('click', () => popupToggle(popupAdd));
 //закрытиe всех попапов по клавише esc
 function closePopups(popupOpen) {
   popupOpen.classList.remove('popup_opened');
-  window.removeEventListener('keydown', closePopupEsc);
+  
 }
 function closePopupEsc(evt) {
   const popupOpen = document.querySelector('.popup_opened');
@@ -127,9 +130,7 @@ function formSubmitHandlerAdd(evt) {
   const objectCard = {};
   objectCard.link = placeImgInput.value;
   objectCard.name = placeNameInput.value;
-  const card = new Card(objectCard, cardsTemplateElement);
-  cardsList.prepend(card.generateCard());
-  //addCards(placeName, placeImg)
+  renderCard(objectCard, cardsTemplateElement);
   placeNameInput.value = '';
   placeImgInput.value = '';
   popupToggle(popupAdd);
