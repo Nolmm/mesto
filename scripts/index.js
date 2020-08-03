@@ -99,14 +99,12 @@ popupAddOpenButton.addEventListener('click', () => popupToggle(popupAdd));
 popupAddCloseButton.addEventListener('click', () => popupToggle(popupAdd));
 
 //закрытиe всех попапов по клавише esc
-function closePopups(popupOpen) {
-  popupOpen.classList.remove('popup_opened');
-  
-}
+
 function closePopupEsc(evt) {
   const popupOpen = document.querySelector('.popup_opened');
   if (evt.key === 'Escape' && popupOpen) {
-    closePopups(popupOpen);
+    popupToggle(popupOpen); //выбрала первый вариант предложенной Вами реализации, тк при втором - разделить popuptoggle на 2 функции
+                            //пришлось бы многое в проекте переделать, боюсь ошибиться, а итерация последняя..
   }
 }
 
