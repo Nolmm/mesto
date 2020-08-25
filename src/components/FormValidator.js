@@ -11,13 +11,12 @@ export class FormValidator {
   }
 
   //показывает ошибку
-  _showInputError = (
+  _showInputError (
     form,
     input,
     errorMessage,
     inputErrorClass,
-    errorClass
-  ) => {
+    errorClass) {
     const formError = this._form.querySelector(`#${input.id}-error`);
     input.classList.add(this._inputErrorClass);
     formError.textContent = errorMessage;
@@ -25,7 +24,7 @@ export class FormValidator {
   };
 
   //скрывает ошибку
-  _hideInputError = (form, input, inputErrorClass, errorClass) => {
+  _hideInputError(form, input, inputErrorClass, errorClass) {
     // Выбираем элемент ошибки на основе id
     const formError = this._form.querySelector(`#${input.id}-error`);
     input.classList.remove(this._inputErrorClass);
@@ -35,7 +34,7 @@ export class FormValidator {
   };
 
   // Функция, которая проверяет валидность поля
-  _isValid = (form, input, inputErrorClass, errorClass) => {
+  _isValid (form, input, inputErrorClass, errorClass) {
     if (!input.validity.valid) {
       // Если поле не проходит валидацию, покажем ошибку
       this._showInputError(
@@ -51,7 +50,7 @@ export class FormValidator {
     }
   };
 
-  _hasInvalidInput = (inputList) => {
+  _hasInvalidInput (inputList) {
     // проходим по этому массиву методом some
     return inputList.some((inputElement) => {
       // Если поле не валидно, колбэк вернёт true
@@ -62,7 +61,7 @@ export class FormValidator {
   };
 
   //делает кнопку неактивной
-  _toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
+  _toggleButtonState (inputList, buttonElement, inactiveButtonClass) {
     // Если есть хотя бы один невалидный инпут
     if (this._hasInvalidInput(inputList)) {
       // сделай кнопку неактивной
@@ -76,14 +75,14 @@ export class FormValidator {
   };
 
   //слушатель
-  _setEventListeners = (
+  _setEventListeners (
     form,
     inputSelector,
     submitButtonSelector,
     inactiveButtonClass,
     inputErrorClass,
     errorClass
-  ) => {
+  ) {
     // Найдём все поля формы и сделаем из них массив
     const inputList = Array.from(
       this._form.querySelectorAll(this._inputSelector)

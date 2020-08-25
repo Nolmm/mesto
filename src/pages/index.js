@@ -1,6 +1,11 @@
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
 
+import { Card } from '../components/Card.js';
+import {FormValidator} from '../components/FormValidator.js';
+import { Section } from '../components/Section.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js'
+import './index.css'
 const popupsList = document.querySelector('.popup');
 const popupEdit = document.querySelector('.popup__edit-profile');
 const popupEditOpenButton = document.querySelector('.profile__edit-button'); //кнопка открытия редактирования профиля
@@ -12,7 +17,7 @@ const popupDarkBackground = document.querySelectorAll('.popup');
 const userTitle = document.querySelector('.profile__title');
 const userSubtitle = document.querySelector('.profile__subtitle');
 const submitButtonSelector = document.querySelector('.popup__submit-button');
-
+const popupAddSaveBtn = document.querySelector('.popup__add-button')
 const popupAdd = document.querySelector('.popup__add-card'); //попап добавления карточки
 export const popupIncrease = document.querySelector('.popup__increase-img');
 export const popupIncreaseTitle = document.querySelector('.popup__figcaption');
@@ -62,51 +67,67 @@ const jobInput = document.querySelector('.popup__item_job'); //поле рабо
 const placeNameInput = document.querySelector('.popupadd__item_place-name'); //поле название форма эдд
 const placeImgInput = document.querySelector('.popupadd__item_place-img'); //поле со ссылкой на картинку форма эдд
 
-//открытие и закрытие попап//
-export const popupToggle = function (selectpopup) {
-  window.addEventListener('keydown', closePopupEsc); //добавляет слушатель для закрытия по esc
-  if (selectpopup.classList.contains('popup_opened')) {
-    window.removeEventListener('keydown', closePopupEsc);
-  }
-  selectpopup.classList.toggle('popup_opened');
-};
+const userInfo = new UserInfo({
+  name: nameInput,
+  job: jobInput
+})
 
-popupIncreaseCloseButton.addEventListener('click', () =>
-  popupToggle(popupIncrease)
-); //закрытие картинки
+//добавляем карточки 
+const section = new Section ({
+  items: initialCards, //массив карточке
+  renderer: (item) => {
+    // Создадим экземпляр карточки
+  const card = new Card({
+    name: item.name,
+    link: item.link,
+    cardSelector: cardsTemplateElement,
+    handleCardClick: (name, link) => {
+      popupWithImage.open(name, link);
+  }});
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateCard();
+  // Добавляем в DOM
+  section.addItem(cardElement);
+}
+  },
+  cardsList,
+   //куда вставляем темплейт = контейнерселектор
+);
+section.render();
+
+//попапы из классов
+const popupWithImage = new PopupWithImage(popupIncrease); //картинка
+const popupAddform = new PopupWithForm({  //добавление картинки
+  popupSelector: popupAdd,
+  formSubmit: (data) => {
+    const card = new Card({
+      name: data.placename, //имена полей
+      link: data.placeimg,
+      cardSelector: cardsTemplateElement,
+      handleCardClick: (name, link) => {
+        popupWithImage.open(name, link);
+      }});
+  const cardElement = card.generateCard();
+  section.addItem(cardElement);
+} 
+});
+//редактирование профиля
+const popupEditform = new PopupWithForm({
+  popupSelector: document.querySelector('.popup__edit-profile'),
+  formSubmit: (value) => {
+    userInfo.setUserInfo(value);
+}
+})
 
 //изменение данных на странице через форму//
-function formSubmitHandler(evt) {
-  evt.preventDefault(); //отменили стандартное поведение
-  userTitle.textContent = nameInput.value;
-  userSubtitle.textContent = jobInput.value;
+function formSubmitHandler() {
+  userInfo.getUserInfo();
   submitButtonSelector.setAttribute('disabled', true);
-  popupToggle(popupEdit);
+  popupEditform.open()
+  
 }
 
-//будет отправка формы//
-formElementEdit.addEventListener('submit', formSubmitHandler);
-//открытие и закрытие попапов
-popupEditOpenButton.addEventListener('click', function () {
-  if (!popupsList.classList.contains('popup_opened')) {
-    nameInput.value = userTitle.textContent;
-    jobInput.value = userSubtitle.textContent;
-  }
-  popupToggle(popupEdit);
-});
-popupEditCloseButton.addEventListener('click', () => popupToggle(popupEdit));
-popupAddOpenButton.addEventListener('click', () => popupToggle(popupAdd));
-popupAddCloseButton.addEventListener('click', () => popupToggle(popupAdd));
-
-//закрытиe всех попапов по клавише esc
-
-function closePopupEsc(evt) {
-  const popupOpen = document.querySelector('.popup_opened');
-  if (evt.key === 'Escape' && popupOpen) {
-    popupToggle(popupOpen); //выбрала первый вариант предложенной Вами реализации, тк при втором - разделить popuptoggle на 2 функции
-                            //пришлось бы многое в проекте переделать, боюсь ошибиться, а итерация последняя..
-  }
-}
+popupEditOpenButton.addEventListener('click', formSubmitHandler);
 
 //закрытия всех попапов при клике вне области(на фон)
 popupDarkBackground.forEach((background) => {
@@ -122,28 +143,12 @@ popupDarkBackground.forEach((background) => {
 });
 
 //добавление карточки через форму
-function formSubmitHandlerAdd(evt) {
-  evt.preventDefault(); //отменили стандартное поведение
-  submitButtonSelector.disabled = true;
-  const objectCard = {};
-  objectCard.link = placeImgInput.value;
-  objectCard.name = placeNameInput.value;
-  renderCard(objectCard, cardsTemplateElement);
-  placeNameInput.value = '';
-  placeImgInput.value = '';
-  popupToggle(popupAdd);
+function formSubmitHandlerAdd() {
+  popupAddform.open();
 }
-formElementAdd.addEventListener('submit', formSubmitHandlerAdd);
 
-function renderCard(item) {
-  // Создадим экземпляр карточки
-  const card = new Card(item, cardsTemplateElement);
-  // Создаём карточку и возвращаем наружу
-  const cardElement = card.generateCard();
-  // Добавляем в DOM
-  cardsList.prepend(cardElement);
-}
-initialCards.forEach(renderCard); //перебираем массив и каждую добавляем
+popupAddOpenButton.addEventListener('click', formSubmitHandlerAdd);
+
 const objectForm = {
   formSelector: '.popup__form', //формы
   inputSelector: '.popup__item', //инпуты
