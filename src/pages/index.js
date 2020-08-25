@@ -6,6 +6,7 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js'
 import './index.css'
+import { data } from 'autoprefixer';
 const popupsList = document.querySelector('.popup');
 const popupEdit = document.querySelector('.popup__edit-profile');
 const popupEditOpenButton = document.querySelector('.profile__edit-button'); //кнопка открытия редактирования профиля
@@ -71,23 +72,27 @@ const userInfo = new UserInfo({
   name: nameInput,
   job: jobInput
 })
+function newCard (item) {
+  const card = new Card({
+    name: item.name, 
+    link: item.link,
+    cardsTemplateElement,
+    handleCardClick: (name, link) => {
+      popupWithImage.open(name, link);
+  }}
+    ); 
+  // Создаём карточку и возвращаем наружу 
+  const cardElement = card.generateCard(); 
+  // Добавляем в DOM 
+  section.addItem(cardElement);
+} 
 
 //добавляем карточки 
 const section = new Section ({
   items: initialCards, //массив карточке
   renderer: (item) => {
     // Создадим экземпляр карточки
-  const card = new Card({
-    name: item.name,
-    link: item.link,
-    cardSelector: cardsTemplateElement,
-    handleCardClick: (name, link) => {
-      popupWithImage.open(name, link);
-  }});
-  // Создаём карточку и возвращаем наружу
-  const cardElement = card.generateCard();
-  // Добавляем в DOM
-  section.addItem(cardElement);
+    newCard(item)
 }
   },
   cardsList,
@@ -96,11 +101,17 @@ const section = new Section ({
 section.render();
 
 //попапы из классов
-const popupWithImage = new PopupWithImage(popupIncrease); //картинка
+const popupWithImage = new PopupWithImage('.popup__increase-img'); //картинка
+
 const popupAddform = new PopupWithForm({  //добавление картинки
-  popupSelector: popupAdd,
+  popupSelector: ('.popup__add-card'),
   formSubmit: (data) => {
-    const card = new Card({
+    const dataObj = { 
+      name: data.placename, //имена полей
+      link: data.placeimg}
+    newCard(dataObj)
+   
+    /*const card = new Card({
       name: data.placename, //имена полей
       link: data.placeimg,
       cardSelector: cardsTemplateElement,
@@ -109,11 +120,11 @@ const popupAddform = new PopupWithForm({  //добавление картинк�
       }});
   const cardElement = card.generateCard();
   section.addItem(cardElement);
-} 
-});
+} */
+}});
 //редактирование профиля
 const popupEditform = new PopupWithForm({
-  popupSelector: document.querySelector('.popup__edit-profile'),
+  popupSelector: ('.popup__edit-profile'),
   formSubmit: (value) => {
     userInfo.setUserInfo(value);
 }
@@ -130,17 +141,13 @@ function formSubmitHandler() {
 popupEditOpenButton.addEventListener('click', formSubmitHandler);
 
 //закрытия всех попапов при клике вне области(на фон)
-popupDarkBackground.forEach((background) => {
-  const currentPopup = background.closest('.popup');
-  background.addEventListener('mousedown', (event) => {
-    if (event.target !== event.currentTarget) {
-      return;
-    }
-    {
-      currentPopup.classList.remove('popup_opened');
-    }
-  });
+//нашла более простое решение, вроде ьы работает
+popupDarkBackground.forEach(background => {
+  background.addEventListener('click', (evt) => {               
+    evt.target.classList.remove('popup_opened');   
 });
+});
+
 
 //добавление карточки через форму
 function formSubmitHandlerAdd() {
