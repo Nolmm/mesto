@@ -14,7 +14,8 @@
 @import url(./__close-img/popup__close-img.css);
 @import url(./__container-increase/popuppopup__container-increase.css);
 @import url(./__edit-profile/__edit-profile.css);
-
+@import url(./__question/popup__question.css);
+@import url(./__editavatar/popup__editavatar.css);
 
 @import url(./__button_disabled/popup__button_disabled.css);
 

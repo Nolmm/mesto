@@ -10,6 +10,7 @@
   transition: .3s ease;
   cursor: pointer;
   background-repeat: no-repeat;
+  margin-bottom: 3px;
 }
 
 .elements__like:hover {

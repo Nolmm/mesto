@@ -7,7 +7,9 @@
 @import url(./__like/elements__like.css);
 @import url(./__like_active/elements__like_active.css);
 @import url(./__trash/elements__trash.css);
-
+@import url(./__like_group/elements__like_group.css);
+@import url(./trash__active/elements__trash_active.css);
+@import url(./__like_number/elements__like_number.css);
 
 .elements {
   max-width: 882px;

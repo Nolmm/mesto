@@ -7,6 +7,10 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js'
 import './index.css'
 import { data } from 'autoprefixer';
+import {Api} from '../components/Api.js';
+import {PopupQuestion} from '../components/PopupQuestion.js';
+
+
 const popupsList = document.querySelector('.popup');
 const popupEdit = document.querySelector('.popup__edit-profile');
 const popupEditOpenButton = document.querySelector('.profile__edit-button'); //кнопка открытия редактирования профиля
@@ -18,7 +22,12 @@ const popupDarkBackground = document.querySelectorAll('.popup');
 const userTitle = document.querySelector('.profile__title');
 const userSubtitle = document.querySelector('.profile__subtitle');
 const submitButtonSelector = document.querySelector('.popup__submit-button');
-const popupAddSaveBtn = document.querySelector('.popup__add-button')
+//кнопки
+const popupAddSaveBtn = document.querySelector('.popup__add-button');
+const popupEditBtn = document.querySelector('.popup__edit-button');
+//const popupQuesBtn = document.querySelector('.popup__ques-button');
+const popupAvatarSave = document.querySelector('.popup__avatar-button');
+
 const popupAdd = document.querySelector('.popup__add-card'); //попап добавления карточки
 export const popupIncrease = document.querySelector('.popup__increase-img');
 export const popupIncreaseTitle = document.querySelector('.popup__figcaption');
@@ -26,7 +35,7 @@ export const popupIncreaseImg = document.querySelector('.popup__img');
 const cardsList = document.querySelector('.elements__list'); //куда вставляем темплейт тег
 export const cardsTemplateElement = document.querySelector('.card-template'); //темплейт тег
 //массив карточек//
-const initialCards = [
+/*const initialCards = [
   {
     name: 'Архыз',
     link:
@@ -57,7 +66,7 @@ const initialCards = [
     link:
      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
   },
-];
+];*/
 
 //переменные для валидации
 const formElement = document.querySelectorAll('.popup__form'); //выбрали обе формы
@@ -67,19 +76,40 @@ const nameInput = document.querySelector('.popup__item_name'); //поле имя
 const jobInput = document.querySelector('.popup__item_job'); //поле работа форма эдит
 const placeNameInput = document.querySelector('.popupadd__item_place-name'); //поле название форма эдд
 const placeImgInput = document.querySelector('.popupadd__item_place-img'); //поле со ссылкой на картинку форма эдд
+const api = new Api ('https://mesto.nomoreparties.co/v1/cohort-14/')
+
+const userAvatar = document.querySelector('.profile__avatar');
+//форма изменения аватара
+const popupAvatarEdit = document.querySelector('.popup__editavatar');
+const formEditAvatar = popupAvatarEdit.querySelector('.popup__editavatar-form');
+const avatarInput = formEditAvatar.querySelector('.popup__item_avatar');
+
+
 
 const userInfo = new UserInfo({
   name: nameInput,
-  job: jobInput
-})
+  job: jobInput,
+  api: api
+}, userAvatar)
+
+
+
+
+
+
 function newCard (item) {
   const card = new Card({
-    name: item.name, 
-    link: item.link,
+   items: item,
     cardsTemplateElement,
+    api: api,
     handleCardClick: (name, link) => {
       popupWithImage.open(name, link);
-  }}
+  },
+    deleteCard: (idCard, element) => {
+      popupQuestion.open(idCard, element, api)
+    },
+    idMy: id
+}
     ); 
   // Создаём карточку и возвращаем наружу 
   const cardElement = card.generateCard(); 
@@ -87,9 +117,32 @@ function newCard (item) {
   section.addItem(cardElement);
 } 
 
+
+
+
+const section = new Section ({ 
+  
+  renderer: (item, id) => { 
+    // Создадим экземпляр карточки 
+    newCard(item, id) 
+} 
+  }, 
+  '.elements__list-item'
+   //куда вставляем темплейт = контейнерселектор 
+); 
+
+
+
+
 //добавляем карточки 
-const section = new Section ({
-  items: initialCards, //массив карточке
+
+userInfo.getProfile().then(id => {
+  api.getItems('cards').then(data =>{
+    section.renderItems(data, id); 
+  })
+});
+/*const section = new Section ({
+  items: data, //массив карточке
   renderer: (item) => {
     // Создадим экземпляр карточки
     newCard(item)
@@ -99,18 +152,34 @@ const section = new Section ({
    //куда вставляем темплейт = контейнерселектор
 );
 section.render();
-
+})*/
 //попапы из классов
 const popupWithImage = new PopupWithImage('.popup__increase-img'); //картинка
-
+const popupQuestion = new PopupQuestion('.popup__question', renderLoading);
 const popupAddform = new PopupWithForm({  //добавление картинки
   popupSelector: ('.popup__add-card'),
-  formSubmit: (data) => {
+  /*formSubmit: (data) => {
     const dataObj = { 
       name: data.placename, //имена полей
       link: data.placeimg}
-    newCard(dataObj)
-   
+    newCard(dataObj)}
+   */
+    formSubmit: (item) => {
+      renderLoading(popupAddSaveBtn, true, 'Сохранение..')
+      api.post('cards', item).then(items => {
+        const dataObj = { 
+          items: items,
+          api: api,
+          idMy: items.Master._id,
+          
+        }
+          newCard(dataObj)
+      })
+      .finally(() => {
+        popupAddform.close()
+        renderLoading(popupAddSaveBtn, false, 'Сохранить')
+    })
+    }
     /*const card = new Card({
       name: data.placename, //имена полей
       link: data.placeimg,
@@ -121,12 +190,44 @@ const popupAddform = new PopupWithForm({  //добавление картинк�
   const cardElement = card.generateCard();
   section.addItem(cardElement);
 } */
-}});
+});
+const popupEditAvatar = new PopupWithForm({
+  popupSelector: ('.popup__editavatar'),
+  formSubmit: (item) => {
+    renderLoading(popupAvatarSave, true)
+    userInfo.editUserAvatar('users/me/avatar', item).then(data => {
+      userAvatar.setAttribute('src', data.avatar) 
+  })
+  .finally(() => {
+    popupEditAvatar.close()
+    renderLoading(popupAvatarSave, false)
+})
+  }
+})
+console.log(popupEditAvatar)
+
+function editUserAvatar() {
+  const avatar = userInfo.getUserAvatar();
+  avatarInput.value = avatar.link;
+  popupEditAvatar.open();
+}
+
+document.querySelector('.profile__group').addEventListener('click', editUserAvatar);
+
 //редактирование профиля
 const popupEditform = new PopupWithForm({
   popupSelector: ('.popup__edit-profile'),
   formSubmit: (value) => {
-    userInfo.setUserInfo(value);
+    renderLoading(popupEditBtn, true)
+        userInfo.setUserInfo(value)
+        .then(data => {
+            nameInput.textContent = data.name;
+            jobInput.textContent = data.about;
+        })
+        .finally(() => {
+          popupEditform.close()
+            renderLoading(popupEditBtn, false)
+        })
 }
 })
 
@@ -172,3 +273,20 @@ const popupEditValidation = new FormValidator(
   objectForm,
   popupEdit
 ).enableValidation(); //экземпляр для редактирования профиля
+
+const popupEditAvatarValidation = new FormValidator(
+  objectForm,
+  popupAvatarEdit
+).enableValidation();
+userInfo.getProfile();
+
+
+const renderLoading = (button, isLoading, textButton) => {
+  if(isLoading) {
+      button.setAttribute('disabled', true)
+      button.textContent = textButton
+  } else {
+      button.removeAttribute('disabled')
+      button.textContent = textButton
+  }
+}

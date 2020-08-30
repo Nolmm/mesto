@@ -15,7 +15,11 @@
     </header>
     <main>
       <section class="profile">
-        <div class="profile__avatar"></div>
+        <div class="profile__group">
+          <div class="profile__avatar"></div>
+          <div class="profile__avatar_pencil"></div>
+        </div>
+        
         <div class="profile__info">
           <div class="profile__wrapper">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -41,7 +45,7 @@
           <span id="name-input-error" class="popup__input-error">Вы пропустили это поле</span>
           <input type="text" name="job" id="job-input" class="popup__item popup__item_job" required minlength="2" maxlength="200">
           <span id="job-input-error" class="popup__input-error">Вы пропустили это поле</span>
-          <button type="submit" class="popup__submit-button">Сохранить</button>
+          <button type="submit" class="popup__submit-button popup__edit-button">Сохранить</button>
         </form>
       </div>
     </section>
@@ -67,6 +71,24 @@
       </figure>
       </div>
     </section>
+    <section class="popup popup__question">
+      <div class="popup__container">
+        <button type="button" class="popup__close-ques popup__close-btn"></button>
+        <h2 class="popup__title">Вы уверены?</h2>
+        <button type="submit" class="popup__submit-button popup__ques-button">Да</button>
+      </div>
+    </section>
+    <section class="popup popup__editavatar">
+      <div class="popup__container">
+        <button type="button" class="popup__close-editavatar popup__close-btn"></button>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form name="edit-avatar" class="popup__form popup__editavatar-form">
+          <input type="url" name="link" placeholder="Название" class="popup__item popup__item_avatar" required minlength="1">
+          <span id="place-name-input-error" class="popup__input-error">Вы пропустили это поле</span>
+          <button type="submit" class="popup__submit-button popup__avatar-button">Сохранить</button>
+        </form>
+      </div>
+    </section>
     <template id = "template-element" class="card-template">
       <li class="elements__list-item">
             <figure class="elements__figure">
@@ -74,7 +96,11 @@
               <img class="elements__image" src="#" alt="">
               <figcaption class="elements__figcaption">
                 <h3 class="elements__title"></h3>
-                <button type="button" class="elements__like"></button>
+                <div class="elements__like_group">
+                    <button type="button" class="elements__like"></button>
+                    <span class="elements__like_number"></span>
+                </div>
+              
               </figcaption>
             </figure>
           </li>

@@ -5,7 +5,8 @@
 @import url(./__subtitle/profile__subtitle.css);
 @import url(./__edit-button/profile__edit-button.css);
 @import url(./__add-button/profile__add-button.css);
-
+@import url(./__avatar_pencil/profile__avatar_pencil.css);
+@import url(./__group/profile__group.css);
 .profile {
   display: flex;
   flex-direction: row;
