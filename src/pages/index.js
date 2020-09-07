@@ -76,7 +76,7 @@ const nameInput = document.querySelector('.popup__item_name'); //поле имя
 const jobInput = document.querySelector('.popup__item_job'); //поле работа форма эдит
 const placeNameInput = document.querySelector('.popupadd__item_place-name'); //поле название форма эдд
 const placeImgInput = document.querySelector('.popupadd__item_place-img'); //поле со ссылкой на картинку форма эдд
-const api = new Api ('https://mesto.nomoreparties.co/v1/cohort-14/')
+const api = new Api ('https://mesto.nomoreparties.co/v1/cohort-15/')
 
 const userAvatar = document.querySelector('.profile__avatar');
 //форма изменения аватара
@@ -87,8 +87,8 @@ const avatarInput = formEditAvatar.querySelector('.popup__item_avatar');
 
 
 const userInfo = new UserInfo({
-  name: nameInput,
-  job: jobInput,
+  name: userTitle,
+  job: userSubtitle,
   api: api
 }, userAvatar)
 
@@ -97,9 +97,9 @@ const userInfo = new UserInfo({
 
 
 
-function newCard (item) {
+/*function newCard (item) {
   const card = new Card({
-   items: item,
+    items: item,
     cardsTemplateElement,
     api: api,
     handleCardClick: (name, link) => {
@@ -115,12 +115,29 @@ function newCard (item) {
   const cardElement = card.generateCard(); 
   // Добавляем в DOM 
   section.addItem(cardElement);
-} 
+} */
+const section = new Section ({
+  renderer: (item, id) => {
+    const card = new Card({
+      data: item,
+      cardSelector: cardsTemplateElement,
+      myId: id,
+      api: api,
+      handleCardClick: (name, link) => {
+        popupWithImage.open(name, link);
+    },
+    deleteCard: (cardId, element) => {
+      popupQuestion.open(cardId, element, api)
+    }
+    });
+    const cardElement = card.generateCard();
+    section.addItem(cardElement);
+  }
+})
 
 
 
-
-const section = new Section ({ 
+/*const section = new Section ({ 
   
   renderer: (item, id) => { 
     // Создадим экземпляр карточки 
@@ -129,7 +146,7 @@ const section = new Section ({
   }, 
   '.elements__list-item'
    //куда вставляем темплейт = контейнерселектор 
-); 
+); */
 
 
 
@@ -166,14 +183,22 @@ const popupAddform = new PopupWithForm({  //добавление картинк�
    */
     formSubmit: (item) => {
       renderLoading(popupAddSaveBtn, true, 'Сохранение..')
-      api.post('cards', item).then(items => {
-        const dataObj = { 
-          items: items,
+      api.post('cards', item).then(data => {
+        const card = new Card ({ 
+          data: data,
           api: api,
-          idMy: items.Master._id,
-          
+          myId: data.owner._id,
+          cardSelector: cardsTemplateElement,
+          handleCardClick: (name, link) => {
+            popupWithImage.open(name, link);
+        },
+        deleteCard: (cardId, element, api) => {
+          popupQuestion.open(cardId, element, api)
         }
-          newCard(dataObj)
+        })
+        const cardElement = card.generateCard();
+        section.addItem(cardElement);
+
       })
       .finally(() => {
         popupAddform.close()
@@ -194,17 +219,18 @@ const popupAddform = new PopupWithForm({  //добавление картинк�
 const popupEditAvatar = new PopupWithForm({
   popupSelector: ('.popup__editavatar'),
   formSubmit: (item) => {
-    renderLoading(popupAvatarSave, true)
+    renderLoading(popupAvatarSave, true, 'Сохранение...')
     userInfo.editUserAvatar('users/me/avatar', item).then(data => {
       userAvatar.setAttribute('src', data.avatar) 
   })
   .finally(() => {
     popupEditAvatar.close()
-    renderLoading(popupAvatarSave, false)
+    renderLoading(popupAvatarSave, false,  'Сохранить')
 })
   }
 })
-console.log(popupEditAvatar)
+
+
 
 function editUserAvatar() {
   const avatar = userInfo.getUserAvatar();
@@ -274,10 +300,10 @@ const popupEditValidation = new FormValidator(
   popupEdit
 ).enableValidation(); //экземпляр для редактирования профиля
 
-const popupEditAvatarValidation = new FormValidator(
+/*const popupEditAvatarValidation = new FormValidator(
   objectForm,
   popupAvatarEdit
-).enableValidation();
+).enableValidation();*/
 userInfo.getProfile();
 
 

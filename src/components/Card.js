@@ -4,16 +4,16 @@ import {
 
 export class Card {
   //заготовка для карточки
-  constructor({items, cardSelector, handleCardClick, deleteCard, idMy}) {
-    this._name = items.name;
-    this._link = items.link;
+  constructor({data, cardSelector, handleCardClick, deleteCard, myId, api}) {
+    this._name = data.name;
+    this._link = data.link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
-    this._like = items.like;
-    this._idCard = items._id;
+    this._like = data.like;
+    this._cardId = data._id;
     this._deleteCard =  deleteCard;
-    this._idMaster = items.Master._id;;
-    this._idMy = idMy;
+    this._owner = data.owner._id;
+    this._myId = myId;
     this._api = api;
     this._element = this.generateCard();
   }
@@ -33,11 +33,11 @@ export class Card {
     this._element.querySelector('.elements__title').textContent = this._name;
     this._element.querySelector('.elements__like_number').textContent = this._like.length;
     this._setEventListeners();
-    if (this._idMaster === this._idMy) {
+    if (this._owner === this._myId) {
       this._element.querySelector('.elements__trash').classList.add('.elements__trash_active')
   }
       this._like.some(item => {
-      if (item._id === this._idMy) {
+      if (item._id === this._myId) {
           this._element.querySelector('.elements__like').classList.add('elements__like_active')
       }
   })
@@ -81,7 +81,7 @@ _likeToggle(data) {
       .addEventListener('click', (evt) => this._addLike(evt));
     this._element
       .querySelector('.elements__trash')
-      .addEventListener('click', () => this._deleteCard(this._idCard, this._element, this._api));
+      .addEventListener('click', () => this._deleteCard(this._cardId, this._element, this._api));
     this._element
       .querySelector('.elements__image')
       .addEventListener('click', () => {

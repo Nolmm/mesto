@@ -16,7 +16,7 @@
     <main>
       <section class="profile">
         <div class="profile__group">
-          <div class="profile__avatar"></div>
+          <img src="images/user_foto.jpg" class="profile__avatar">
           <div class="profile__avatar_pencil"></div>
         </div>
         
@@ -80,10 +80,10 @@
     </section>
     <section class="popup popup__editavatar">
       <div class="popup__container">
-        <button type="button" class="popup__close-editavatar popup__close-btn"></button>
+        <button type="button" class="popup__close-btn popup__close-editavatar"></button>
         <h2 class="popup__title">Обновить аватар</h2>
         <form name="edit-avatar" class="popup__form popup__editavatar-form">
-          <input type="url" name="link" placeholder="Название" class="popup__item popup__item_avatar" required minlength="1">
+          <input type="url" name="link" placeholder="Ссылка" class="popup__item popup__item_avatar" required minlength="1">
           <span id="place-name-input-error" class="popup__input-error">Вы пропустили это поле</span>
           <button type="submit" class="popup__submit-button popup__avatar-button">Сохранить</button>
         </form>

@@ -9,7 +9,7 @@ export class Api {
       return fetch(/*`${this.baseUrl}/users/me`*/this._baseUrl + url, {
           method: 'GET',
           headers: {
-              authorization: '8845167f-d5ed-44fc-9a4e-114019c410b1',
+              authorization: 'ec958303-2883-4fc9-affb-18ff9d007ba6',
               'Content-Type': 'application/json'
           }
       })
@@ -31,7 +31,7 @@ export class Api {
     return fetch(/*`${this.baseUrl}/users/me`*/this._baseUrl + url, {
         method: 'PATCH',
         headers: {
-            authorization: '8845167f-d5ed-44fc-9a4e-114019c410b1',
+            authorization: 'ec958303-2883-4fc9-affb-18ff9d007ba6',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -55,7 +55,7 @@ post(url, item) {
   return fetch(this._baseUrl + url, {
       method: 'POST',
       headers: {
-          authorization: '8845167f-d5ed-44fc-9a4e-114019c410b1',
+          authorization: 'ec958303-2883-4fc9-affb-18ff9d007ba6',
           'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -78,7 +78,7 @@ patchAvatar(url, item) {
   return fetch(this._baseUrl + url, {
       method: 'PATCH',
       headers: {
-          authorization: '8845167f-d5ed-44fc-9a4e-114019c410b1',
+          authorization: 'ec958303-2883-4fc9-affb-18ff9d007ba6',
           'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -101,7 +101,7 @@ delete(url) {
   return fetch(this._baseUrl + url, {
       method: 'DELETE',
       headers: {
-          authorization: '8845167f-d5ed-44fc-9a4e-114019c410b1',
+          authorization: 'ec958303-2883-4fc9-affb-18ff9d007ba6',
           'Content-Type': 'application/json'
       }
   })
@@ -120,7 +120,7 @@ put(url) {
   return fetch(this._baseUrl + url, {
       method: 'PUT',
       headers: {
-          authorization: '8845167f-d5ed-44fc-9a4e-114019c410b1',
+          authorization: 'ec958303-2883-4fc9-affb-18ff9d007ba6',
           'Content-Type': 'application/json'
       }
   })

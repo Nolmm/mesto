@@ -11,6 +11,10 @@ export  class UserInfo {
 
 
   getUserInfo() {
+    /*return {
+      name: this._nameInput.textContent,
+      job: this._jobInput.textContent
+    }*/
     this._nameInput.value = this._name.textContent; 
     this._jobInput.value = this._job.textContent; 
     
@@ -23,11 +27,11 @@ export  class UserInfo {
 }
 
 getProfile() {
-  return this._api.getItems('users/me').then(value => {
-      this._nameInput.textContent = value.name;
-      this._jobInput.textContent =  value.about;
-      this._avatar.setAttribute('src', value.avatar);
-      return value._id;
+  return this._api.getItems('users/me').then(data => {
+      this._nameInput.textContent = data.name;
+      this._jobInput.textContent =  data.about;
+      this._avatar.setAttribute('src', data.avatar);
+      return data._id;
   })
 }
 
