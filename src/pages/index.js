@@ -116,7 +116,7 @@ const userInfo = new UserInfo({
   // Добавляем в DOM 
   section.addItem(cardElement);
 } */
-const section = new Section ({
+/*const section = new Section ({
   renderer: (item, id) => {
     const card = new Card({
       data: item,
@@ -133,7 +133,7 @@ const section = new Section ({
     const cardElement = card.generateCard();
     section.addItem(cardElement);
   }
-})
+})*/
 
 
 
@@ -155,9 +155,30 @@ const section = new Section ({
 
 userInfo.getProfile().then(id => {
   api.getItems('cards').then(data =>{
-    section.renderItems(data, id); 
+    const section = new Section({
+      data: data,
+      renderer: (item) => {
+        const card = new Card({
+          data: item,
+          cardSelector: cardsTemplateElement,
+          myId: id,
+          api: api,
+          handleCardClick: (name, link) => {
+            popupWithImage.open(name, link);
+        },
+        deleteCard: (cardId, element) => {
+          popupQuestion.open(cardId, element, api)
+        }
+        });
+        const cardElement = card.generateCard();
+        section.addItem(cardElement);
+      }
+    }, '.elements__list'
+    )
+    section.renderItems()
+    })
   })
-});
+;
 /*const section = new Section ({
   items: data, //массив карточке
   renderer: (item) => {
@@ -181,13 +202,16 @@ const popupAddform = new PopupWithForm({  //добавление картинк�
       link: data.placeimg}
     newCard(dataObj)}
    */
-    formSubmit: (item) => {
+    formSubmit: (values) => {
       renderLoading(popupAddSaveBtn, true, 'Сохранение..')
-      api.post('cards', item).then(data => {
-        const card = new Card ({ 
-          data: data,
+      api.post('cards', values).then(data => {
+        const section = new Section({
+          data: [data],
+          renderer: (item) => {
+          const card = new Card ({ 
+          data: item,
           api: api,
-          myId: data.owner._id,
+          myId: item.owner._id,
           cardSelector: cardsTemplateElement,
           handleCardClick: (name, link) => {
             popupWithImage.open(name, link);
@@ -197,14 +221,17 @@ const popupAddform = new PopupWithForm({  //добавление картинк�
         }
         })
         const cardElement = card.generateCard();
-        section.addItem(cardElement);
-
-      })
+        section.addItem(cardElement)
+      }}, 
+      '.elements__list')
+      section.renderItems()
+    })
       .finally(() => {
         popupAddform.close()
         renderLoading(popupAddSaveBtn, false, 'Сохранить')
-    })
+      })
     }
+})
     /*const card = new Card({
       name: data.placename, //имена полей
       link: data.placeimg,
@@ -215,7 +242,6 @@ const popupAddform = new PopupWithForm({  //добавление картинк�
   const cardElement = card.generateCard();
   section.addItem(cardElement);
 } */
-});
 const popupEditAvatar = new PopupWithForm({
   popupSelector: ('.popup__editavatar'),
   formSubmit: (item) => {

@@ -51,7 +51,7 @@ export class Api {
 }
 
 
-post(url, item) {
+post(url, values) {
   return fetch(this._baseUrl + url, {
       method: 'POST',
       headers: {
@@ -59,8 +59,8 @@ post(url, item) {
           'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-          name: item.placename,
-          link:  item.placeimg
+          name: values.placename,
+          link:  values.placeimg
       })
   })
   .then(res => {

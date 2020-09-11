@@ -9,13 +9,13 @@ export class Card {
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
-    this._like = data.like;
+    this._like = data.likes;
     this._cardId = data._id;
     this._deleteCard =  deleteCard;
     this._owner = data.owner._id;
     this._myId = myId;
     this._api = api;
-    this._element = this.generateCard();
+    
   }
   //получаем темплейт элемент
   _getTemplate() {
@@ -53,7 +53,7 @@ export class Card {
 */
 
 _likeToggle(data) {
-  this._element.querySelector('.elements__like_number').textContent = data.like.length;
+  this._element.querySelector('.elements__like_number').textContent = data.likes.length;
   this._element.querySelector('.elements__like').classList.toggle('elements__like_active')
 }
 
@@ -81,7 +81,10 @@ _likeToggle(data) {
       .addEventListener('click', (evt) => this._addLike(evt));
     this._element
       .querySelector('.elements__trash')
-      .addEventListener('click', () => this._deleteCard(this._cardId, this._element, this._api));
+      .addEventListener('click', (evt) => {
+        this._cardElement = evt.target.parentElement;
+        this._deleteCard(this._cardId, this._element, this._api)
+      });
     this._element
       .querySelector('.elements__image')
       .addEventListener('click', () => {
