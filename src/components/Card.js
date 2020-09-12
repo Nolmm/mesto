@@ -34,7 +34,7 @@ export class Card {
     this._element.querySelector('.elements__like_number').textContent = this._like.length;
     this._setEventListeners();
     if (this._owner === this._myId) {
-      this._element.querySelector('.elements__trash').classList.add('.elements__trash_active')
+      this._element.querySelector('.elements__trash').classList.add('elements__trash_active')
   }
       this._like.some(item => {
       if (item._id === this._myId) {
@@ -59,12 +59,12 @@ _likeToggle(data) {
 
   _addLike(evt) {
     if(!evt.target.classList.contains('elements__like_active')) {
-        this._api.put(`cards/likes/${this._cardId}`)
+        this._api.putLike(`cards/likes/${this._cardId}`)
             .then(data => {
                this._likeToggle(data)
             })
     } else {
-        this._api.delete(`cards/likes/${this._cardId}`).then(data => {
+        this._api.deleteItems(`cards/likes/${this._cardId}`).then(data => {
           this._likeToggle(data)
         })
     }

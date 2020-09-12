@@ -21,7 +21,7 @@ export  class UserInfo {
   }
 
   setUserInfo(values) {
-    return this._api.patch('users/me', values)
+    return this._api.patchUserInfo('users/me', values)
   
 
 }

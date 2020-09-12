@@ -34,6 +34,15 @@ export const popupIncreaseTitle = document.querySelector('.popup__figcaption');
 export const popupIncreaseImg = document.querySelector('.popup__img');
 const cardsList = document.querySelector('.elements__list'); //куда вставляем темплейт тег
 export const cardsTemplateElement = document.querySelector('.card-template'); //темплейт тег
+const renderLoading = (button, isLoading, textButton) => {
+  if(isLoading) {
+      button.setAttribute('disabled', true)
+      button.textContent = textButton
+  } else {
+      button.removeAttribute('disabled')
+      button.textContent = textButton
+  }
+}
 //массив карточек//
 /*const initialCards = [
   {
@@ -116,40 +125,6 @@ const userInfo = new UserInfo({
   // Добавляем в DOM 
   section.addItem(cardElement);
 } */
-/*const section = new Section ({
-  renderer: (item, id) => {
-    const card = new Card({
-      data: item,
-      cardSelector: cardsTemplateElement,
-      myId: id,
-      api: api,
-      handleCardClick: (name, link) => {
-        popupWithImage.open(name, link);
-    },
-    deleteCard: (cardId, element) => {
-      popupQuestion.open(cardId, element, api)
-    }
-    });
-    const cardElement = card.generateCard();
-    section.addItem(cardElement);
-  }
-})*/
-
-
-
-/*const section = new Section ({ 
-  
-  renderer: (item, id) => { 
-    // Создадим экземпляр карточки 
-    newCard(item, id) 
-} 
-  }, 
-  '.elements__list-item'
-   //куда вставляем темплейт = контейнерселектор 
-); */
-
-
-
 
 //добавляем карточки 
 
@@ -179,18 +154,7 @@ userInfo.getProfile().then(id => {
     })
   })
 ;
-/*const section = new Section ({
-  items: data, //массив карточке
-  renderer: (item) => {
-    // Создадим экземпляр карточки
-    newCard(item)
-}
-  },
-  cardsList,
-   //куда вставляем темплейт = контейнерселектор
-);
-section.render();
-})*/
+
 //попапы из классов
 const popupWithImage = new PopupWithImage('.popup__increase-img'); //картинка
 const popupQuestion = new PopupQuestion('.popup__question', renderLoading);
@@ -204,7 +168,7 @@ const popupAddform = new PopupWithForm({  //добавление картинк�
    */
     formSubmit: (values) => {
       renderLoading(popupAddSaveBtn, true, 'Сохранение..')
-      api.post('cards', values).then(data => {
+      api.ostNewCard('cards', values).then(data => {
         const section = new Section({
           data: [data],
           renderer: (item) => {
@@ -232,16 +196,7 @@ const popupAddform = new PopupWithForm({  //добавление картинк�
       })
     }
 })
-    /*const card = new Card({
-      name: data.placename, //имена полей
-      link: data.placeimg,
-      cardSelector: cardsTemplateElement,
-      handleCardClick: (name, link) => {
-        popupWithImage.open(name, link);
-      }});
-  const cardElement = card.generateCard();
-  section.addItem(cardElement);
-} */
+    
 const popupEditAvatar = new PopupWithForm({
   popupSelector: ('.popup__editavatar'),
   formSubmit: (item) => {
@@ -255,8 +210,6 @@ const popupEditAvatar = new PopupWithForm({
 })
   }
 })
-
-
 
 function editUserAvatar() {
   const avatar = userInfo.getUserAvatar();
@@ -326,19 +279,10 @@ const popupEditValidation = new FormValidator(
   popupEdit
 ).enableValidation(); //экземпляр для редактирования профиля
 
-/*const popupEditAvatarValidation = new FormValidator(
+const popupEditAvatarValidation = new FormValidator( //экземпляр для изменения аватара
   objectForm,
-  popupAvatarEdit
-).enableValidation();*/
+  formEditAvatar
+).enableValidation();
 userInfo.getProfile();
 
 
-const renderLoading = (button, isLoading, textButton) => {
-  if(isLoading) {
-      button.setAttribute('disabled', true)
-      button.textContent = textButton
-  } else {
-      button.removeAttribute('disabled')
-      button.textContent = textButton
-  }
-}

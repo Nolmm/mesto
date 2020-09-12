@@ -19,7 +19,7 @@ open(cardId, element, api) {
   this._popupquesButton.addEventListener('click', (evt) => {
         evt.preventDefault()
         this._renderLoading(this._popupquesButton, true, 'Удаление...')
-        api.delete(`cards/${cardId}`)
+        api.deleteItems(`cards/${cardId}`)
         .then(() => {
           element.remove()
       })

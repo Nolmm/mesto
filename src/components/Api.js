@@ -6,14 +6,15 @@ export class Api {
   }
 
   getItems(url) {
-      return fetch(/*`${this.baseUrl}/users/me`*/this._baseUrl + url, {
-          method: 'GET',
-          headers: {
-              authorization: 'ec958303-2883-4fc9-affb-18ff9d007ba6',
-              'Content-Type': 'application/json'
-          }
-      })
-      .then((res) => {
+    return fetch(/*`${this.baseUrl}/users/me`*/this._baseUrl + url, {
+        method: 'GET',
+        headers: {
+            authorization: 'ec958303-2883-4fc9-affb-18ff9d007ba6',
+            'Content-Type': 'application/json'
+        }
+    })
+
+    .then((res) => {
         if(res.ok) {
             return res.json();
         }
@@ -21,13 +22,10 @@ export class Api {
     })
     .catch((err) => {
         console.log(err)
-    })
-          
+    })  
+}
 
-          
-  }
-
-  patch(url, values) {
+  patchUserInfo(url, values) {
     return fetch(/*`${this.baseUrl}/users/me`*/this._baseUrl + url, {
         method: 'PATCH',
         headers: {
@@ -51,7 +49,7 @@ export class Api {
 }
 
 
-post(url, values) {
+postNewCard(url, values) {
   return fetch(this._baseUrl + url, {
       method: 'POST',
       headers: {
@@ -97,7 +95,7 @@ patchAvatar(url, item) {
 }
 
 
-delete(url) {
+deleteItems(url) {
   return fetch(this._baseUrl + url, {
       method: 'DELETE',
       headers: {
@@ -116,7 +114,7 @@ delete(url) {
 })
 }
 
-put(url) {
+putLike(url) {
   return fetch(this._baseUrl + url, {
       method: 'PUT',
       headers: {

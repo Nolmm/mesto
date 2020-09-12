@@ -18,7 +18,7 @@
 @import url(./__editavatar/popup__editavatar.css);
 @import url(./__close-editavatar/popup__close-editavatar.css);
 @import url(./__button_disabled/popup__button_disabled.css);
-
+@import url(./__close-ques/popup__close-ques.css);
 
 .popup {
   position: fixed;
