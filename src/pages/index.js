@@ -168,7 +168,7 @@ const popupAddform = new PopupWithForm({  //добавление картинк�
    */
     formSubmit: (values) => {
       renderLoading(popupAddSaveBtn, true, 'Сохранение..')
-      api.ostNewCard('cards', values).then(data => {
+      api.postNewCard('cards', values).then(data => {
         const section = new Section({
           data: [data],
           renderer: (item) => {
