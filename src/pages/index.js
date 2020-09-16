@@ -101,31 +101,6 @@ const userInfo = new UserInfo({
   api: api
 }, userAvatar)
 
-
-
-
-
-
-/*function newCard (item) {
-  const card = new Card({
-    items: item,
-    cardsTemplateElement,
-    api: api,
-    handleCardClick: (name, link) => {
-      popupWithImage.open(name, link);
-  },
-    deleteCard: (idCard, element) => {
-      popupQuestion.open(idCard, element, api)
-    },
-    idMy: id
-}
-    ); 
-  // Создаём карточку и возвращаем наружу 
-  const cardElement = card.generateCard(); 
-  // Добавляем в DOM 
-  section.addItem(cardElement);
-} */
-
 //добавляем карточки 
 
 userInfo.getProfile().then(id => {
@@ -146,13 +121,16 @@ userInfo.getProfile().then(id => {
         }
         });
         const cardElement = card.generateCard();
-        section.addItem(cardElement);
+        section.addCard(cardElement);
       }
     }, '.elements__list'
     )
     section.renderItems()
     })
   })
+  .catch((err) => {
+    console.log(err)
+})
 ;
 
 //попапы из классов
@@ -160,12 +138,6 @@ const popupWithImage = new PopupWithImage('.popup__increase-img'); //карти�
 const popupQuestion = new PopupQuestion('.popup__question', renderLoading);
 const popupAddform = new PopupWithForm({  //добавление картинки
   popupSelector: ('.popup__add-card'),
-  /*formSubmit: (data) => {
-    const dataObj = { 
-      name: data.placename, //имена полей
-      link: data.placeimg}
-    newCard(dataObj)}
-   */
     formSubmit: (values) => {
       renderLoading(popupAddSaveBtn, true, 'Сохранение..')
       api.postNewCard('cards', values).then(data => {
@@ -190,8 +162,13 @@ const popupAddform = new PopupWithForm({  //добавление картинк�
       '.elements__list')
       section.renderItems()
     })
+    .then(() => {
+      popupAddform.close()
+    })
+    .catch((err) => {
+      console.log(err)
+  })
       .finally(() => {
-        popupAddform.close()
         renderLoading(popupAddSaveBtn, false, 'Сохранить')
       })
     }
@@ -201,11 +178,16 @@ const popupEditAvatar = new PopupWithForm({
   popupSelector: ('.popup__editavatar'),
   formSubmit: (item) => {
     renderLoading(popupAvatarSave, true, 'Сохранение...')
-    userInfo.editUserAvatar('users/me/avatar', item).then(data => {
+    api.patchAvatar('users/me/avatar', item).then(data => {
       userAvatar.setAttribute('src', data.avatar) 
   })
-  .finally(() => {
+  .then(() => {
     popupEditAvatar.close()
+  })
+  .catch((err) => {
+    console.log(err)
+})
+  .finally(() => {
     renderLoading(popupAvatarSave, false,  'Сохранить')
 })
   }
@@ -214,6 +196,8 @@ const popupEditAvatar = new PopupWithForm({
 function editUserAvatar() {
   const avatar = userInfo.getUserAvatar();
   avatarInput.value = avatar.link;
+  popupEditAvatarValidation.resetError();
+  formEditAvatar.reset();
   popupEditAvatar.open();
 }
 
@@ -224,13 +208,26 @@ const popupEditform = new PopupWithForm({
   popupSelector: ('.popup__edit-profile'),
   formSubmit: (value) => {
     renderLoading(popupEditBtn, true)
-        userInfo.setUserInfo(value)
-        .then(data => {
-            nameInput.textContent = data.name;
-            jobInput.textContent = data.about;
+    api.patchUserInfo('users/me', value)
+        .then((data) => {
+          console.log(data)
+          userInfo.setUserInfo(
+            //nameInput.textContent = data.name,
+            //jobInput.textContent = data.about
+            {
+              name: data.name,
+              job: data.about
+            }
+          )
         })
-        .finally(() => {
+        .then(() => {
           popupEditform.close()
+        })
+        .catch((err) => {
+          console.log(err)
+      })
+        .finally(() => {
+          
             renderLoading(popupEditBtn, false)
         })
 }
@@ -238,8 +235,11 @@ const popupEditform = new PopupWithForm({
 
 //изменение данных на странице через форму//
 function formSubmitHandler() {
-  userInfo.getUserInfo();
-  submitButtonSelector.setAttribute('disabled', true);
+  const data = userInfo.getUserInfo();
+  nameInput.value = data.name;
+  jobInput.value = data.job;
+  //submitButtonSelector.setAttribute('disabled', true);
+  popupEditValidation.resetError();
   popupEditform.open()
   
 }
@@ -257,6 +257,8 @@ popupDarkBackground.forEach(background => {
 
 //добавление карточки через форму
 function formSubmitHandlerAdd() {
+  popupAddValidation.resetError()
+  formElementAdd.reset()
   popupAddform.open();
 }
 
@@ -273,16 +275,20 @@ const objectForm = {
 const popupAddValidation = new FormValidator(
   objectForm,
   popupAdd
-).enableValidation(); //экземпляр для формы добавления картинки
+)
+popupAddValidation.enableValidation(); //экземпляр для формы добавления картинки
+
 const popupEditValidation = new FormValidator(
   objectForm,
   popupEdit
-).enableValidation(); //экземпляр для редактирования профиля
+)
+popupEditValidation.enableValidation(); //экземпляр для редактирования профиля
 
 const popupEditAvatarValidation = new FormValidator( //экземпляр для изменения аватара
   objectForm,
   formEditAvatar
-).enableValidation();
-userInfo.getProfile();
+)
+popupEditAvatarValidation.enableValidation();
+
 
 

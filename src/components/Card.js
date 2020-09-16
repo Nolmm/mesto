@@ -63,10 +63,16 @@ _likeToggle(data) {
             .then(data => {
                this._likeToggle(data)
             })
+            .catch((err) => {
+              console.log(err)
+          });
     } else {
         this._api.deleteItems(`cards/likes/${this._cardId}`).then(data => {
           this._likeToggle(data)
         })
+        .catch((err) => {
+          console.log(err)
+      });
     }
   }
   //удаляем карточку

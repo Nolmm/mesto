@@ -8,6 +8,7 @@ export class FormValidator {
     this._inputErrorClass = object.inputErrorClass;
     this._errorClass = object.errorClass;
     this._form = form;
+    
   }
 
   //показывает ошибку
@@ -103,4 +104,20 @@ export class FormValidator {
     this._form.addEventListener('submit', (evt) => evt.preventDefault); //отмена стандартного поведения
     this._setEventListeners();
   }
+
+  resetError() {
+    const inputList = Array.from(
+      this._form.querySelectorAll(this._inputSelector)
+    );
+    inputList.forEach((input) => input.classList.remove(this._inputErrorClass));
+        const errors = Array.from(this._form.querySelectorAll('.popup__input-error'));
+        errors.forEach((error) => {
+            error.classList.remove(this._inputErrorClass);
+            error.textContent = '';
+        });
+        const buttonElement = this._form.querySelector(this._submitButtonSelector);
+        buttonElement.classList.add(this._inactiveButtonClass);
+        buttonElement.setAttribute('disabled', '');
+    }
+  
 }

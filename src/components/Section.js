@@ -13,4 +13,8 @@ addItem(element) {
     this._container.prepend(element);
 }
 
+addCard(element) {
+  this._container.append(element);
+}
+
   }

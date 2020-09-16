@@ -3,25 +3,24 @@ export  class UserInfo {
   constructor({name, job, api}, avatar) {
     this._nameInput = name;
     this._jobInput = job;
-    this._name = document.querySelector('.profile__title');
-    this._job = document.querySelector('.profile__subtitle');
+    //this._name = document.querySelector('.profile__title');
+    //this._job = document.querySelector('.profile__subtitle');
     this._avatar = avatar;
     this._api = api;
   }
 
 
   getUserInfo() {
-    /*return {
+    return {
       name: this._nameInput.textContent,
       job: this._jobInput.textContent
-    }*/
-    this._nameInput.value = this._name.textContent; 
-    this._jobInput.value = this._job.textContent; 
-    
+    }
   }
 
-  setUserInfo(values) {
-    return this._api.patchUserInfo('users/me', values)
+  setUserInfo(data) {
+    document.querySelector('.profile__title').textContent = data.name;
+    document.querySelector('.profile__subtitle').textContent = data.job
+
   
 
 }
@@ -41,7 +40,7 @@ getUserAvatar() {
   }
 }
 
-editUserAvatar(url, item) {
-  return this._api.patchAvatar(url, item)
-}
+//editUserAvatar(url, item) {
+  //return this._api.patchAvatar(url, item)
+//}
 }

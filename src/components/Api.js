@@ -20,12 +20,9 @@ export class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`)
     })
-    .catch((err) => {
-        console.log(err)
-    })  
 }
 
-  patchUserInfo(url, values) {
+  patchUserInfo(url, value) {
     return fetch(/*`${this.baseUrl}/users/me`*/this._baseUrl + url, {
         method: 'PATCH',
         headers: {
@@ -33,8 +30,8 @@ export class Api {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          name: /*'Marie Skłodowska Curie',*/values.name,
-          about: /*'Physicist and Chemist'*/values.job
+          name: /*'Marie Skłodowska Curie',*/value.name,
+          about: /*'Physicist and Chemist'*/value.job
         })
     })
     .then(res => {
@@ -42,9 +39,6 @@ export class Api {
           return res.json()
       }
       return Promise.reject(`Ошибка: ${res.status}`)
-  })
-  .catch((err) => {
-      console.log(err)
   })
 }
 
@@ -67,9 +61,6 @@ postNewCard(url, values) {
     }
     return Promise.reject(`Ошибка: ${res.status}`)
 })
-.catch((err) => {
-    console.log(err)
-})
 }
 
 patchAvatar(url, item) {
@@ -89,9 +80,6 @@ patchAvatar(url, item) {
     }
     return Promise.reject(`Ошибка: ${res.status}`)
 })
-.catch((err) => {
-    console.log(err)
-})
 }
 
 
@@ -109,9 +97,6 @@ deleteItems(url) {
     }
     return Promise.reject(`Ошибка: ${res.status}`)
 })
-.catch((err) => {
-    console.log(err)
-})
 }
 
 putLike(url) {
@@ -127,9 +112,6 @@ putLike(url) {
         return res.json()
     }
     return Promise.reject(`Ошибка: ${res.status}`)
-})
-.catch((err) => {
-    console.log(err)
 })
 }
 } 

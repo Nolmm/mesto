@@ -23,6 +23,9 @@ open(cardId, element, api) {
         .then(() => {
           element.remove()
       })
+      .catch((err) => {
+        console.log(err)
+    })
       .finally(() => {
         this.close()
         this._renderLoading(this._popupquesButton, false, 'Удалить')
