@@ -1,6 +1,4 @@
-import {
-  cardsTemplateElement
-} from '../pages/index.js';
+
 
 export class Card {
   //заготовка для карточки
@@ -19,7 +17,7 @@ export class Card {
   }
   //получаем темплейт элемент
   _getTemplate() {
-    const cardElement = cardsTemplateElement.content
+    const cardElement = document.querySelector(this._cardSelector).content
       .querySelector('.elements__list-item')
       .cloneNode(true);
     return cardElement;
@@ -34,7 +32,7 @@ export class Card {
     this._element.querySelector('.elements__like_number').textContent = this._like.length;
     this._setEventListeners();
     if (this._owner === this._myId) {
-      this._element.querySelector('.elements__trash').classList.add('elements__trash_active')
+          this._element.querySelector('.elements__trash').classList.add('elements__trash_active')
   }
       this._like.some(item => {
       if (item._id === this._myId) {
@@ -42,7 +40,6 @@ export class Card {
       }
   })
     return this._element;
-
   }
   //добавляем или убираем лайк
   /*_addLike() {
@@ -61,12 +58,13 @@ _likeToggle(data) {
     if(!evt.target.classList.contains('elements__like_active')) {
         this._api.putLike(`cards/likes/${this._cardId}`)
             .then(data => {
-               this._likeToggle(data)
+                this._likeToggle(data)
             })
             .catch((err) => {
               console.log(err)
           });
-    } else {
+    } 
+    else {
         this._api.deleteItems(`cards/likes/${this._cardId}`).then(data => {
           this._likeToggle(data)
         })

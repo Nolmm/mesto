@@ -110,7 +110,7 @@ userInfo.getProfile().then(id => {
       renderer: (item) => {
         const card = new Card({
           data: item,
-          cardSelector: cardsTemplateElement,
+          cardSelector: ('.card-template'),
           myId: id,
           api: api,
           handleCardClick: (name, link) => {
@@ -127,6 +127,9 @@ userInfo.getProfile().then(id => {
     )
     section.renderItems()
     })
+    .catch((err) => {
+      console.log(err)
+  })
   })
   .catch((err) => {
     console.log(err)
@@ -148,7 +151,7 @@ const popupAddform = new PopupWithForm({  //добавление картинк�
           data: item,
           api: api,
           myId: item.owner._id,
-          cardSelector: cardsTemplateElement,
+          cardSelector: ('.card-template'),
           handleCardClick: (name, link) => {
             popupWithImage.open(name, link);
         },
@@ -207,7 +210,7 @@ document.querySelector('.profile__group').addEventListener('click', editUserAvat
 const popupEditform = new PopupWithForm({
   popupSelector: ('.popup__edit-profile'),
   formSubmit: (value) => {
-    renderLoading(popupEditBtn, true)
+    renderLoading(popupEditBtn, true, 'Сохранение...')
     api.patchUserInfo('users/me', value)
         .then((data) => {
           console.log(data)
@@ -228,7 +231,7 @@ const popupEditform = new PopupWithForm({
       })
         .finally(() => {
           
-            renderLoading(popupEditBtn, false)
+            renderLoading(popupEditBtn, false, 'Сохранить')
         })
 }
 })
