@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "name": "mesto",
+  "description": "Интерактивная страница сервис Mesto. Рефакторинг кода с использованием ООП. 1. Созданы классы Card и FormValidator, отвечающие каждый за свою функциональность. 2. Файлы с классами импортированы в основной файл со скриптом. 3. Используются модули.",
+  "icons": {
+    "60": "/assets/firefox_app_60x60.png",
+    "128": "/assets/firefox_app_128x128.png",
+    "512": "/assets/firefox_app_512x512.png"
+  },
+  "developer": {
+    "name": null,
+    "url": null
+  }
+}
